@@ -107,7 +107,6 @@ void my_swap(char* s1, char* s2) {
         *(tmp_s1++) = *(s1++);
     *tmp_s1 = 0;
     tmp_s1 = tmp;
-    printf("\n");
     while (*s2 != 0)
         *(starts1++) = *(s2++);
     while (*tmp_s1 != 0)
@@ -122,30 +121,39 @@ void sorting(char* pointer, int words) {
                 my_swap(pointer + i * N, pointer + j * N);
 
 }
+void change_spaces(char* pC,int words){
+    char* pCstart = pC;
+    int k = 0;
+    for(int i = 0; i<words; i++){
+        pC = pCstart+i*N;
+        while (*pC != 0){
+            k++;
+            pC++;
+        }
+        while (k != 0){
+            *(pC++) = ' ';
+            k--;
+        }
+        *(pC++) = '|';
+        *pC = 0;
+    }
+}
 
 int main()
 {
     int words;
-    int j = 0,k=0;
+    int k=0;
     char str[N];
     char words_for_digits[] = {"0zero1one2two3three4four5five6six7seven8eight9nine0\0"};
     printf("Enter the string:");
     fgets(str,N,stdin);
     char exit[N][N];
     char* pC = &exit[0][0];
-    char* pCstart = pC;
+    char* pCstart = &exit[0][0];
     replacement_digit(str,words_for_digits);
     words = change_array(&exit[0][0],str);
-    for (int i = 0;i<words;i++){
-        while (exit[i][j] != 0){
-            printf("%c", exit[i][j]);
-            j++;
-        }
-        j = 0;
-        printf("\n");
-    }
-    printf("\n");
     sorting(&exit[0][0],words);
+    change_spaces(&exit[0][0],words);
     while (pC != pCstart+N*words){
         k++;
         while (*pC != 0){
